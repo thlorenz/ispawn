@@ -1,0 +1,42 @@
+{
+  "name": "ispawn",
+  "version": "0.0.0",
+  "description": "Spawn a process to inspect it.",
+  "main": "ispawn.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "files": [
+    "preload/", "lib/", "ispawn.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thlorenz/ispawn.git"
+  },
+  "homepage": "https://github.com/thlorenz/ispawn",
+  "dependencies": {
+    "pump": "~3.0.0",
+    "split2": "~2.2.0",
+    "through2": "~2.0.3"
+  },
+  "keywords": [
+    "spawn",
+    "inspect",
+    "process"
+  ],
+  "author": {
+    "name": "Thorsten Lorenz",
+    "email": "thlorenz@gmx.de",
+    "url": "http://thlorenz.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/thlorenz/ispawn/blob/master/LICENSE"
+  },
+  "engine": {
+    "node": ">=8"
+  },
+  "devDependencies": {
+    "tape": "~4.9.1"
+  }
+}
