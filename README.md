@@ -69,14 +69,14 @@ be printed to the console.
 **Parameters**
 
 -   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** options
--   `execArgv` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)>?** arguments passed to Node.js/V8 directly (not to your app) (optional, default `[]`)
--   `argv` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)>** file to run followed by flags to pass to your app
--   `node` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** path to Node.js executable (optional, default `process.execPath`)
--   `spawnOpts` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** options passed to `child_process.spawn` (optional, default `{}`)
--   `onStdout` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** function to call with each line written to stdout (optional, default `null`)
--   `onStderr` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** function to call with each line written to stderr (optional, default `null`)
+    -   `$0.execArgv` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)>?** arguments passed to Node.js/V8 directly (not to your app) (optional, default `[]`)
+    -   `$0.argv` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)>** file to run followed by flags to pass to your app
+    -   `$0.node` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** path to Node.js executable (optional, default `process.execPath`)
+    -   `$0.spawnOpts` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** options passed to `child_process.spawn` (optional, default `{}`)
+    -   `$0.onStdout` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** function to call with each line written to stdout (optional, default `null`)
+    -   `$0.onStderr` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** function to call with each line written to stderr (optional, default `null`)
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** with the following properties-   termination: <Promise> that resolves when process exits
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** with the following properties-   termination: {Promise} that resolves when process exits
 -   proc: the spawned process
 
 ## Kudos
