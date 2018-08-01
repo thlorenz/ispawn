@@ -76,7 +76,7 @@ be printed to the console.
     -   `$0.onStdout` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** function to call with each line written to stdout (optional, default `null`)
     -   `$0.onStderr` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)?** function to call with each line written to stderr (optional, default `null`)
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** with the following properties-   termination: <Promise> that resolves when process exits
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** with the following properties-   termination: {Promise} that resolves when process exits
 -   proc: the spawned process
 
 ## Kudos
