@@ -1,0 +1,304 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>  | Documentation</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+</head>
+<body class='documentation'>
+  <div class='max-width-4 mx-auto'>
+    <div class='clearfix md-mxn2'>
+      <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'></h3>
+          <div class='mb1'><code></code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#createspawn'
+                  class="">
+                  createSpawn
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spawn'
+                  class="">
+                  spawn
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div class='fix-margin-3'>
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='createspawn'>
+      createSpawn
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Configures a process to be spawned but doesn't spawn it yet</p>
+
+
+  <div class='pre p1 fill-light mt0'>createSpawn</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>$0</span> <code class='quiet'>(Objects)</code>
+	    options (same as @see 
+<code>spawn</code>
+)
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>Spawner</code>:
+        that will spawn the configured process via 
+<code>spawner.spawn</code>
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spawn'>
+      spawn
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Spawns a process with the given options allowing to intercept <code>stdout</code>
+and <code>stderr</code> output of the application itself or the underlying process,
+i.e. V8 and Node.js messages.</p>
+<h3>onStdout and onStderr interceptors</h3>
+<p>The functions, <code>onStdout</code>, <code>onStderr</code> called with each line written to the
+respective file descriptor have the following signature:</p>
+<p><code>onStdout(line:String, fromApp:Boolean)</code> where <code>fromApp</code> is <code>true</code> when the
+line came from the app itself and <code>false</code> when it came from the underlying
+runtime, i.e. Node.js or V8 when flags triggered diagnostics output.</p>
+<p>To mark a line as <em>handled</em> return <code>true</code> from the function and it will not
+be printed to the console.</p>
+<h3>Example</h3>
+<pre class='hljs'> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onStdout</span>(<span class="hljs-params">line, fromApp</span>) </span>{
+   <span class="hljs-comment">// Don't intercept app output, just have it printed as usual</span>
+   <span class="hljs-keyword">if</span> (fromApp) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+   <span class="hljs-comment">// Do something with diagnositics messages here ...</span>
+
+   <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+ }
+ <span class="hljs-keyword">const</span> { termination } = spawn({
+     <span class="hljs-attr">execArgv</span>: [ <span class="hljs-string">'--trace-turbo-inlining'</span> ]
+   , <span class="hljs-attr">argv</span>: [ <span class="hljs-built_in">require</span>.resolve(<span class="hljs-string">'./bind.js'</span>) ]
+   , onStdout
+ })
+
+ <span class="hljs-keyword">try</span> {
+   <span class="hljs-keyword">const</span> code = <span class="hljs-keyword">await</span> termination
+   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'The app returned with code'</span>, code)
+ } <span class="hljs-keyword">catch</span> (err) {
+   <span class="hljs-built_in">console</span>.error(err)
+ }</pre>
+<p><a href="https://github.com/thlorenz/ispawn/blob/master/example/map-inlines">full example</a></p>
+
+
+  <div class='pre p1 fill-light mt0'>spawn</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>$0</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    options
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>$0.execArgv</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>>?</code>
+                  
+                    (default <code>[]</code>)
+                  </td>
+                  <td class='break-word'><span>arguments passed to Node.js/V8 directly (not to your app)
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>$0.argv</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></code>
+                  </td>
+                  <td class='break-word'><span>file to run followed by flags to pass to your app
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>$0.node</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</code>
+                  
+                    (default <code>process.execPath</code>)
+                  </td>
+                  <td class='break-word'><span>path to Node.js executable
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>$0.spawnOpts</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+                  
+                    (default <code>{}</code>)
+                  </td>
+                  <td class='break-word'><span>options passed to 
+<code>child_process.spawn</code>
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>$0.onStdout</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
+                  
+                    (default <code>null</code>)
+                  </td>
+                  <td class='break-word'><span>function to call with each line written to stdout
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>$0.onStderr</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
+                  
+                    (default <code>null</code>)
+                  </td>
+                  <td class='break-word'><span>function to call with each line written to stderr
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        with the following properties
+<ul>
+<li>termination: {Promise} that resolves when process exits</li>
+<li>proc: the spawned process</li>
+</ul>
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
+  </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>
