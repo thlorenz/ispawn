@@ -156,14 +156,14 @@ function createSpawn(opts) {
  *
  * @name spawn
  * @param {Object} $0 options
- * @param {Array.<String>} [execArgv = []] arguments passed to Node.js/V8 directly (not to your app)
- * @param {Array.<String>} argv file to run followed by flags to pass to your app
- * @param {String} [node = process.execPath] path to Node.js executable
- * @param {Object} [spawnOpts = {}] options passed to `child_process.spawn`
- * @param {Function} [onStdout = null] function to call with each line written to stdout
- * @param {Function} [onStderr = null] function to call with each line written to stderr
+ * @param {Array.<String>} [$0.execArgv = []] arguments passed to Node.js/V8 directly (not to your app)
+ * @param {Array.<String>} $0.argv file to run followed by flags to pass to your app
+ * @param {String} [$0.node = process.execPath] path to Node.js executable
+ * @param {Object} [$0.spawnOpts = {}] options passed to `child_process.spawn`
+ * @param {Function} [$0.onStdout = null] function to call with each line written to stdout
+ * @param {Function} [$0.onStderr = null] function to call with each line written to stderr
  * @returns {Object} with the following properties
- *  - termination: <Promise> that resolves when process exits
+ *  - termination: {Promise} that resolves when process exits
  *  - proc: the spawned process
  */
 function createAndSpawn(opts) {
