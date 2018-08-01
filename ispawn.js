@@ -100,10 +100,72 @@ class Spawner {
   get proc() { return this._proc }
 }
 
+/**
+ * Configures a process to be spawned but doesn't spawn it yet
+ *
+ * @name createSpawn
+ * @param {Objects} $0 options (same as @see `spawn`)
+ * @returns {Spawner} that will spawn the configured process via `spawner.spawn`
+ */
 function createSpawn(opts) {
   return new Spawner(opts)
 }
 
+/**
+ * Spawns a process with the given options allowing to intercept `stdout`
+ * and `stderr` output of the application itself or the underlying process,
+ * i.e. V8 and Node.js messages.
+ *
+ * ### onStdout and onStderr interceptors
+ *
+ * The functions, `onStdout`, `onStderr` called with each line written to the
+ * respective file descriptor have the following signature:
+ *
+ * `onStdout(line:String, fromApp:Boolean)` where `fromApp` is `true` when the
+ * line came from the app itself and `false` when it came from the underlying
+ * runtime, i.e. Node.js or V8 when flags triggered diagnostics output.
+ *
+ * To mark a line as _handled_ return `true` from the function and it will not
+ * be printed to the console.
+ *
+ * ### Example
+ *
+ * ```js
+ *  function onStdout(line, fromApp) {
+ *    // Don't intercept app output, just have it printed as usual
+ *    if (fromApp) return false
+ *    // Do something with diagnositics messages here ...
+ *
+ *    return true
+ *  }
+ *  const { termination } = spawn({
+ *      execArgv: [ '--trace-turbo-inlining' ]
+ *    , argv: [ require.resolve('./bind.js') ]
+ *    , onStdout
+ *  })
+ *
+ *  try {
+ *    const code = await termination
+ *    console.log('The app returned with code', code)
+ *  } catch (err) {
+ *    console.error(err)
+ *  }
+ * ```
+ *
+ * [full example](https://github.com/thlorenz/ispawn/blob/master/example/map-inlines)
+ *
+ * @name spawn
+ * @param {Object} $0 options
+ * @param {Array.<String>} [execArgv = []] arguments passed to Node.js/V8 directly (not to your app)
+ * @param {Array.<String>} argv file to run followed by flags to pass to your app
+ * @param {String} [node = process.execPath] path to Node.js executable
+ * @param {Object} [spawnOpts = {}] options passed to `child_process.spawn`
+ * @param {Function} [onStdout = null] function to call with each line written to stdout
+ * @param {Function} [onStderr = null] function to call with each line written to stderr
+ * @returns {Object} with the following properties
+ *  - termination: <Promise> that resolves when process exits
+ *  - proc: the spawned process
+ */
 function createAndSpawn(opts) {
   const spawned = createSpawn(opts)
   const termination = spawned.spawn()
