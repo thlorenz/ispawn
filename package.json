@@ -1,13 +1,15 @@
 {
   "name": "ispawn",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Spawn a process to inspect it.",
   "main": "ispawn.js",
   "scripts": {
     "test": "tape test/*.js"
   },
   "files": [
-    "preload/", "lib/", "ispawn.js"
+    "preload/",
+    "lib/",
+    "ispawn.js"
   ],
   "repository": {
     "type": "git",
