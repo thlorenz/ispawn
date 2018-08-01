@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+const { spawn } = require('../')
+
+const inlineds = new Map()
+
+function onStdout(line, fromApp) {
+  // Don't intercept app output, just have it printed as usual
+  if (fromApp) return false
+
+  // Log any lines we don't understand to the console as well,
+  // even if they didn't come from the app
+  if (!(/Inlining/).test(line)) return false
+
+  // Don't log any inlining messages even the ones we don't understand
+  const m = line.match(/Inlining ([^ ]+) into ([^ ]+)/)
+  if (m == null) return true
+
+  // Pull out data from the interesting inlining messages
+  const [ , child, parent ] = m
+  inlineds.set(child, parent)
+  return true
+}
+
+;(async () => {
+  const { termination } = spawn({
+      execArgv: [ '--trace-turbo-inlining' ]
+    , argv: [ require.resolve('./bind.js') ]
+    , onStdout
+  })
+
+  try {
+    const code = await termination
+    console.log('\n========================\n')
+    console.log('The app returned with code', code)
+
+    for (const [ child, parent ] of inlineds) {
+      console.log(
+        `The function "${child}" was inlined into the "${parent}" function`
+      )
+    }
+  } catch (err) {
+    console.error(err)
+  }
+})()
