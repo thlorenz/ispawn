@@ -89,9 +89,8 @@ class Spawner {
         resolved = true
         resolve(code)
       }
-      this._proc
-        .once('SIGINT', maybeResolve)
-        .once('exit', maybeResolve)
+      process.once('SIGINT', maybeResolve)
+      this._proc.once('exit', maybeResolve)
     })
 
     return theEnd
