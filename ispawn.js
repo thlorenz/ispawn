@@ -1,6 +1,7 @@
 'use strict'
 
 const { spawn } = require('child_process')
+const slowKill = require('slow-kill')
 const path = require('path')
 const pump = require('pump')
 const split = require('split2')
@@ -89,7 +90,10 @@ class Spawner {
         resolved = true
         resolve(code)
       }
-      process.once('SIGINT', maybeResolve)
+      process.once('SIGINT', async () => {
+        await slowKill(this._proc)
+        maybeResolve()
+      })
       this._proc.once('exit', maybeResolve)
     })
 

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/thlorenz/ispawn",
   "dependencies": {
     "pump": "~3.0.0",
+    "slow-kill": "~0.1.0",
     "split2": "~2.2.0",
     "through2": "~2.0.3"
   },
